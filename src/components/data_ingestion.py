@@ -53,4 +53,5 @@ if __name__=="__main__":
     obj.initiate_data_ingestion()
     
  
- # now run it : python src/components/data_ingestion.py                                                           
+ # now run it : python src/components/data_ingestion.py
+ # in .gitignore add .artifacts                                                           

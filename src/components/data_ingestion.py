@@ -54,4 +54,4 @@ if __name__=="__main__":
     
  
  # now run it : python src/components/data_ingestion.py
- # in .gitignore add .artifacts                                                           
+ # in .gitignore add .artifacts  but still it did not ignored the artifacts !!                                                         

@@ -9,6 +9,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+# after I Done the Datatransformation file:
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
 # input for the data ingestion part we need this :
 
 @dataclass # decorator 
@@ -50,8 +54,11 @@ class DataIngestion:
             
 if __name__=="__main__":
     obj=DataIngestion()
-    obj.initiate_data_ingestion()
+    # after i've done the dataTransformation i addd these 
+    train_data,test_data=obj.initiate_data_ingestion()
     
+    data_transformation=DataTransformation()  
+    data_transformation.initiate_data_tarnsformation(train_data,test_data)  
  
  # now run it : python src/components/data_ingestion.py
- # in .gitignore add .artifacts  but still it did not ignored the artifacts !!                                                         
+ 

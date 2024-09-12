@@ -22,9 +22,10 @@ class DataIngestionConfig:# to defien variables we use init but Here directally
     raw_data_path: str=os.path.join('artifacts',"data.csv")#....
 
 class DataIngestion:
+    # Initializes the class and stores the configuration object in self.ingestion_config.
     def __init__(self):
         self.ingestion_config=DataIngestionConfig()   # the variable of the above class 
-                                                        # i will have access tot he three variables above by using this ingestion_congif
+                                                        # i will have access to the three variables above by using this ingestion_congif
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
         try:

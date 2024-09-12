@@ -15,7 +15,8 @@ from src.utils import save_object
 # to provide the input i may required in DataTransformation file : 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")
+    preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl") 
+    #the data will be in preprocessor_obj_file_path saved as preprocessor.pkl in this folder artifacts
 
 class DataTransformation:
     def __init__(self):
@@ -66,6 +67,12 @@ class DataTransformation:
         #to do the tranformation:
         
     def initiate_data_tarnsformation(self,train_path,test_path):# from data_ingestion
+        '''
+        This method is responsible for performing data transformation on the training and test datasets. It takes two inputs:
+
+            train_path: The file path to the training data.
+            test_path: The file path to the testing data.
+        '''
         try:
             train_df=pd.read_csv(train_path)
             test_df=pd.read_csv(test_path)
@@ -80,10 +87,10 @@ class DataTransformation:
             numerical_columns=["writing_score","reading_score"]
             
             input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
-            target_feature_train_df=train_df[target_column_name]
+            target_feature_train_df=train_df[target_column_name]# target vaiable as it is no Changed 
 
             input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
-            target_feature_test_df=test_df[target_column_name]
+            target_feature_test_df=test_df[target_column_name]# target vaiable as it is no Changed 
             
             logging.info(
                 f"Applying preprocessing object on training dataframe and testing dataframe."
@@ -91,8 +98,8 @@ class DataTransformation:
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
-
-            train_arr = np.c_[
+            #combine the features :  merging the input features and their corresponding target valuest
+            train_arr = np.c_[ # np.c_ used to merge two arrrays 
                 input_feature_train_arr, np.array(target_feature_train_df)
             ]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
@@ -109,7 +116,8 @@ class DataTransformation:
             return (
                 train_arr,
                 test_arr,
-                self.data_transformation_config.preprocessor_obj_file_path,
+                # i can say only file_path --> from above it same :)
+                self.data_transformation_config.preprocessor_obj_file_path,# means -->preprocessor.pkl 
             )
         except Exception as e:
             raise CustomException(e,sys)

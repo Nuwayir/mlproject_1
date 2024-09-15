@@ -13,6 +13,10 @@ from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
+
 # input for the data ingestion part we need this :
 
 @dataclass # decorator 
@@ -59,7 +63,10 @@ if __name__=="__main__":
     train_data,test_data=obj.initiate_data_ingestion()
     
     data_transformation=DataTransformation()  
-    data_transformation.initiate_data_tarnsformation(train_data,test_data)  
+    train_arr,test_arr,_=data_transformation.initiate_data_tarnsformation(train_data,test_data)
+    #_ we do not need it 
  
+    modeltrainer=ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
  # now run it : python src/components/data_ingestion.py
  

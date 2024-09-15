@@ -64,9 +64,10 @@ if __name__=="__main__":
     
     data_transformation=DataTransformation()  
     train_arr,test_arr,_=data_transformation.initiate_data_tarnsformation(train_data,test_data)
-    #_ we do not need it 
+    #_  need it 
  
     modeltrainer=ModelTrainer()
     print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
  # now run it : python src/components/data_ingestion.py
- 
+ # after the hyperprametars i got :
+ # 0.8803903329684094

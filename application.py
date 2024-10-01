@@ -1,4 +1,5 @@
 # using flask : 
+# copy of app file for deployment purposess
 import pickle
 from flask import Flask,request,render_template
 import numpy as np

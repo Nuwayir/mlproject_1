@@ -27,14 +27,19 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):#param
     try:
         report = {}
 
+#FOR LOOP for the models and the hypertuning :
         for i in range(len(list(models))):
             model = list(models.values())[i]
             para=param[list(models.keys())[i]]
 
+            # apply gridsearch as cross-valiation technique 
+            # it appleid on all the models with all the hyperparameters 
+            # then it will give me all the models with all parameters been applied as well 
             gs = GridSearchCV(model,para,cv=3)
             gs.fit(X_train,y_train)
 
-            model.set_params(**gs.best_params_)
+            model.set_params(**gs.best_params_)# ** This unpacks the dictionary so that the key-value pairs 
+                                               # are passed as individual keyword arguments to the model.set_params method.
             model.fit(X_train, y_train)  # Train model
 
             y_train_pred = model.predict(X_train)
@@ -52,5 +57,13 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):#param
 
     except Exception as e:
         raise CustomException(e, sys)
+
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return dill.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e, sys)
     
-    
+

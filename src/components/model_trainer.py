@@ -35,8 +35,10 @@ class ModelTrainer:
     def initiate_model_trainer(self,train_array,test_array):#we don't need it yet preprocessor_path
            try:
                logging.info("split training and test input data")
+            #    This selects all rows (:) and all columns except the last one (:-1).
                X_train,y_train,X_test,y_test=(
                    train_array[:,:-1],# take out the last column and keep the other  
+            # This selects all rows (:) and only the last column (-1)
                    train_array[:,-1],# y value only 
                    test_array[:,:-1],
                    test_array[:,-1]
@@ -50,7 +52,9 @@ class ModelTrainer:
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor()
                }
+               
                logging.info(f"Hyperprameter starting")
+               # Could be in Ymal file later !!!
                params={
                 "Decision Tree": {
                     'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
@@ -90,13 +94,22 @@ class ModelTrainer:
             }
                model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
                                                  models=models,param=params)
-                ## To get best model score from dict
+               # Note:  it will give me all the models with all parameters been applied as well 
+               # i can do the follwing :
+ 
+                ## 1- To get best model score from dict
                best_model_score = max(sorted(model_report.values()))
 
-                ## To get best model name from dict
+                ## 2- To get best model name from dict
+                # a=list(dic.keys())[index]-> steps: 
+                # Converting the dictionary keys (model names) and values (scores) into lists.
+                # Finding the index of the best score.
+                # Using that index to get the corresponding model name from the list of keys.
                best_model_name = list(model_report.keys())[
-                list(model_report.values()).index(best_model_score)
+                list(model_report.values()).index(best_model_score)# index of best value ganna be index to get the model name beause it correspondingmo
                 ]
+               
+               # the best model now :
                best_model = models[best_model_name]
 
                if best_model_score<0.6:
